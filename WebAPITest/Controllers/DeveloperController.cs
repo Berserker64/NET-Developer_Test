@@ -21,12 +21,20 @@ namespace WebAPI1.Controllers
         }
 
         // GET: api/Developer
-        [ApiVersion("1.0")]
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var developerlist = await LookupDeveloper();
-            return new JsonResult(developerlist);
+            try
+            {           
+                var developerlist = await LookupDeveloper();
+                var res = new JsonResult(developerlist);
+                res.StatusCode = 200;
+                return res;
+                
+            }catch (Exception e){
+                return new StatusCodeResult(500);
+            }
         }
 
         private async Task<List<Developer>> LookupDeveloper()

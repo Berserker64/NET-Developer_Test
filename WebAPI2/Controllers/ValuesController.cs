@@ -7,55 +7,64 @@ using System.Threading.Tasks;
 using DevTest;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAPI2.Controllers
 {
     [ApiVersion("1.0")]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         private readonly IMemoryCache _cache;
-        public ValuesController(IMemoryCache memoryCache)
+        private IConfiguration _configuration;
+        public ValuesController(IMemoryCache memoryCache, IConfiguration iConfig)
         {
             _cache = memoryCache;
+            _configuration = iConfig;
         }
 
         // GET api/values
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<IActionResult> Get()
-        {
-            var developerlist = await LookupDeveloper();
-            foreach (var dev in developerlist)
+        {            
+            try
             {
-                //TODO: Do in a method and finish requirements
-                dev.Skills.Where(x => x.Level >= 8 );
+                var developerlist = await LookupDeveloper();
+                var result = FilterDeveloper(developerlist);
+                var res = new JsonResult(result);
+                res.StatusCode = 200;
+                return res;
+            }catch (Exception)
+            {
+                return new StatusCodeResult(500);
             }
-            var result = developerlist;
-            return new JsonResult(result);
-        }      
+        }
 
         private async Task<List<Developer>> HttpConnection()
         {
             List<Developer> result;
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:52460/");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var response = await client.GetAsync("api/v1.0/Developer");
+            var baseURL = _configuration.GetSection("WebAPI").GetSection("BaseURL").Value;
+            client.BaseAddress = new Uri(baseURL);
             
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var endpoint = _configuration.GetSection("WebAPI").GetSection("GetAllDevelopers").Value;
+            var response = await client.GetAsync(endpoint);
+
             if (response.IsSuccessStatusCode)
             {
                 var data = response.Content.ReadAsAsync<IEnumerable<Developer>>().Result;
-                result = data.ToList();
+                result = data != null ? data.ToList() : new List<Developer>(); 
             }
             else
             {
                 //Something has gone wrong, handle it here
                 result = new List<Developer>();
             }
-            
+
             return result;
         }
 
@@ -69,7 +78,7 @@ namespace WebAPI2.Controllers
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(25), // cache will expire in 25 seconds
                     SlidingExpiration = TimeSpan.FromSeconds(5) // cache will expire if inactive for 5 seconds
-                };     
+                };
 
                 _cache.Set("ListOfDevelopers", developers, options);
             }
@@ -77,6 +86,19 @@ namespace WebAPI2.Controllers
             return developers;
         }
 
-
+        private List<Developer> FilterDeveloper(List<Developer> developers)
+        {
+            var result = new List<Developer>();
+            foreach (var dev in developers)
+            {
+                var skill = dev.Skills.Where(x => x.Level >= 8).FirstOrDefault();
+                if(skill != null)
+                {
+                    dev.Skills.RemoveAll(x => x.Type != skill.Type);
+                    result.Add(dev);
+                }                
+            }
+            return result;
+        }
     }
 }

@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTestLibrary", "DevTest\DevTestLibrary.csproj", "{157F1287-ADCE-4A9B-98C8-40281C5AEFDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevTestLibrary", "DevTest\DevTestLibrary.csproj", "{157F1287-ADCE-4A9B-98C8-40281C5AEFDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI1", "WebAPITest\WebAPI1.csproj", "{A953E812-DCBF-46A3-864B-3763AE5AB250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI1", "WebAPITest\WebAPI1.csproj", "{A953E812-DCBF-46A3-864B-3763AE5AB250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI2", "WebAPI2\WebAPI2.csproj", "{67FA7DEC-8550-4DBE-8638-08E2E09469F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI2", "WebAPI2\WebAPI2.csproj", "{67FA7DEC-8550-4DBE-8638-08E2E09469F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI1.UnitTest", "WebAPI1.UnitTest\WebAPI1.UnitTest.csproj", "{A87EEC74-57A7-406F-B93D-2FBA603B8766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI2.UnitTest", "WebAPI2.UnitTest\WebAPI2.UnitTest.csproj", "{56701933-D88F-476C-93A7-221DB107B4EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{67FA7DEC-8550-4DBE-8638-08E2E09469F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67FA7DEC-8550-4DBE-8638-08E2E09469F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67FA7DEC-8550-4DBE-8638-08E2E09469F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A87EEC74-57A7-406F-B93D-2FBA603B8766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A87EEC74-57A7-406F-B93D-2FBA603B8766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A87EEC74-57A7-406F-B93D-2FBA603B8766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A87EEC74-57A7-406F-B93D-2FBA603B8766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56701933-D88F-476C-93A7-221DB107B4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56701933-D88F-476C-93A7-221DB107B4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56701933-D88F-476C-93A7-221DB107B4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56701933-D88F-476C-93A7-221DB107B4EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
