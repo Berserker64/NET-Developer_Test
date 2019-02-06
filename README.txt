@@ -1,4 +1,4 @@
-Both WebAPI's have versionning enabled, so to perfom any acton is a must 
+Both WebAPI's have versioning enabled, so to perfom any acton is a must 
 change the URL like "{ip-address:port}/api/v1.0/{controller}"
 
 WebAPI2 consumes WebAPI1,
