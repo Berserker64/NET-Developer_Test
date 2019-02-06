@@ -26,21 +26,24 @@ namespace WebAPI1.Controllers
         public async Task<IActionResult> Get()
         {
             try
-            {           
-                var developerlist = await LookupDeveloper();
-                var res = new JsonResult(developerlist);
-                res.StatusCode = 200;
-                return res;
+            {
+                //Check on cache memory list if is expired list will get again from developer.json file
+                var developerlist = await LookupDevelopers();
+                var response = new JsonResult(developerlist);
+                response.StatusCode = 200;
+                return response;
                 
             }catch (Exception e){
                 return new StatusCodeResult(500);
             }
         }
 
-        private async Task<List<Developer>> LookupDeveloper()
+        private async Task<List<Developer>> LookupDevelopers()
         {
+            //check if exist in cache memory
             if (!_cache.TryGetValue("ListOfDevelopers", out List<Developer> developers))
             {
+                // get the list from developer.json file
                 developers = Developer.FromJson(await System.IO.File.ReadAllTextAsync("developers.json"));
 
                 MemoryCacheEntryOptions options = new MemoryCacheEntryOptions
@@ -48,7 +51,7 @@ namespace WebAPI1.Controllers
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(25), // cache will expire in 25 seconds
                     SlidingExpiration = TimeSpan.FromSeconds(5) // cache will expire if inactive for 5 seconds
                 };
-
+                //save it on cache memory
                 _cache.Set("ListOfDevelopers", developers, options);
             }
 

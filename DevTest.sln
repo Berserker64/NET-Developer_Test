@@ -12,6 +12,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI1.UnitTest", "WebAPI1.UnitTest\WebAPI1.UnitTest.csproj", "{A87EEC74-57A7-406F-B93D-2FBA603B8766}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI2.UnitTest", "WebAPI2.UnitTest\WebAPI2.UnitTest.csproj", "{56701933-D88F-476C-93A7-221DB107B4EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A953E812-DCBF-46A3-864B-3763AE5AB250} = {A953E812-DCBF-46A3-864B-3763AE5AB250}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8976321-CB4E-4415-B604-6B2FBDB2BFEE}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
